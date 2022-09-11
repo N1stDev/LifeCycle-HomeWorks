@@ -4,6 +4,7 @@ namespace Task1_2
 {
     class StringList
     {
+        // Тимофей, здесь можно сделать геттеры и сеттеры
         string[] strList;
         int curCount;
         int maxCount;
