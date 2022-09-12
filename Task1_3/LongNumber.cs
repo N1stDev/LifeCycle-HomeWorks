@@ -53,12 +53,9 @@ namespace Task1_3
 
             b1.value = new string('0', a1.value.Length - b1.value.Length) + b1.value;
 
-            Console.WriteLine(a1.value);
-            Console.WriteLine(b1.value);
-
             int mem = 0;
 
-            for (int i = b.value.Length - 1; i >= 0; i--)
+            for (int i = b1.value.Length - 1; i >= 0; i--)
             {
                 int sub_result = (int)(a1.value[i] - '0') + (int)(b1.value[i] - '0') + mem;
 
@@ -70,7 +67,7 @@ namespace Task1_3
 
             if (mem == 1) result.value = (1).ToString() + result.value;
 
-            b1.value.Trim();
+            b1.value.TrimStart('0');
 
             return result;
         }
@@ -82,9 +79,58 @@ namespace Task1_3
             return result;
         }
 
-        public static LongNumber operator -(LongNumber other)
+        public static LongNumber operator -(LongNumber a, LongNumber b)
         {
-            LongNumber result = new LongNumber("0");
+            LongNumber result = new LongNumber("");
+
+            LongNumber a1, b1;
+
+            if (a.value.Length > b.value.Length)
+            { a1 = a; b1 = b; }
+            else if (b > a)
+            { a1 = b; b1 = a; }
+            else 
+            { a1 = b; b1 = a; }
+
+            a1 = new LongNumber(a1);
+            b1.value = new string('0', a1.value.Length - b1.value.Length) + b1.value;
+
+            // b1 меньше
+
+            for (int i = a1.value.Length - 1; i >= 0; i--)
+            {
+                int sub_result = (int)(a1.value[i] - '0') - (int)(b1.value[i] - '0');
+
+                if (sub_result < 0)
+                {
+                    for (int j = i; j >= 0; j--)
+                    {
+
+                        int buff = (int)(a1.value[j] - '0');
+
+                        if (buff == 0)
+                        {
+                            StringBuilder sb = new StringBuilder(a1.value);
+                            sb[j] = '9';
+                            a1.value = sb.ToString();
+                        }
+                        else
+                        {
+                            buff -= 1;
+                            StringBuilder sb = new StringBuilder(a1.value);
+                            sb[j] = Convert.ToChar(buff.ToString());
+                            a1.value = sb.ToString();
+                            sub_result += 10;
+                            break;
+                   
+                        }
+                    }
+                }
+
+                
+                result.value = (sub_result).ToString() + result.value;
+            }
+
             return result;
         }
     }

@@ -4,11 +4,11 @@
     {
         private static void Main(string[] args)
         {
-            LongNumber a = new LongNumber("9999");
-            LongNumber b = new LongNumber("90023");
+            LongNumber a = new LongNumber("220000");
+            LongNumber b = new LongNumber("12");
 
             Console.WriteLine(a > b);
-            Console.WriteLine((a + b).value);
+            Console.WriteLine((a - b).value);
         }
     }
 
