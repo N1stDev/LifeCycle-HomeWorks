@@ -4,11 +4,19 @@
     {
         private static void Main(string[] args)
         {
-            LongNumber a = new LongNumber("99999");
-            LongNumber b = new LongNumber("00010000");
+            //TODO тестирование
+            LongNumber a = new LongNumber("123");
+            LongNumber b = new LongNumber("12");
+            LongNumber c;
 
             Console.WriteLine(a == b);
-            Console.WriteLine((a - b)._value);
+            Console.WriteLine((a - b).value);
+            Console.WriteLine((int)a);
+            Console.WriteLine((long)a);
+            Console.WriteLine((short)a);
+            Console.WriteLine((bool)a);
+            Console.WriteLine(LongNumber.TryParse("", out c));
+            Console.WriteLine("123".ToLongNumber().value);
         }
     }
 

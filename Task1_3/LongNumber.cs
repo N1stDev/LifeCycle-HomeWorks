@@ -4,8 +4,8 @@ namespace Task1_3
 {
     class LongNumber
     {
-        public string _value;
-
+        private bool _last_set_was_sucessful;
+        private string _value;
         public string value { get { return _value; } 
             set {
                 for (int i = 0; i < value.Length; i++)
@@ -13,12 +13,14 @@ namespace Task1_3
                     if (!("1234567890".Contains(value[i])))
                     {
                         _value = "0";
+                        _last_set_was_sucessful = false;
                         return;
                     }
    
                 }
 
                 value = value.TrimStart('0');
+                _last_set_was_sucessful = true;
                 _value = value;
             } 
         }
@@ -55,12 +57,7 @@ namespace Task1_3
         public static bool operator ==(LongNumber a, LongNumber b)
         {
             if (a._value.Length != b._value.Length) return false;
-            else
-            {
-                for (int i = 0; i < a._value.Length; i++)
-                    if (a._value[i] != b._value[i])
-                        return false;
-            }
+            else if (!a._value.Equals(b._value)) return false;
 
             return true;
         }
@@ -83,6 +80,68 @@ namespace Task1_3
             }
 
             throw new NotImplementedException();
+        }
+
+        public static implicit operator int(LongNumber n)
+        {
+            int a;
+            if (int.TryParse(n.value, out a))
+                return a;
+
+            return -1;
+        }
+
+        public static implicit operator long(LongNumber n)
+        {
+            long a;
+            if (long.TryParse(n.value, out a))
+                return a;
+
+            return -1;
+        }
+
+        public static implicit operator short(LongNumber n)
+        {
+            short a;
+            if (short.TryParse(n.value, out a))
+                return a;
+
+            return -1;
+        }
+
+        public static implicit operator bool(LongNumber n)
+        {
+            return n._value == "1";
+        }
+
+        public static explicit operator LongNumber(int a)
+        {
+            if (a >= 0) return new LongNumber(a.ToString());
+            return new LongNumber("0");
+        }
+
+        public static explicit operator LongNumber(long a)
+        {
+            if (a >= 0) return new LongNumber(a.ToString());
+            return new LongNumber("0");
+        }
+
+        public static explicit operator LongNumber(short a)
+        {
+            if (a >= 0) return new LongNumber(a.ToString());
+            return new LongNumber("0");
+        }
+
+        public static explicit operator LongNumber(bool a)
+        {
+            if (a) return new LongNumber("1");
+            return new LongNumber("0");
+        }
+
+        public static bool TryParse(string s, out LongNumber n)
+        { 
+            n = new LongNumber(s);
+            return n._last_set_was_sucessful;
         }
 
         public static LongNumber operator +(LongNumber a, LongNumber b)
@@ -190,6 +249,19 @@ namespace Task1_3
 
             result._value = result._value.TrimStart('0');
             return result;
+        }
+    }
+
+    static class LongNumberExtentions
+    {
+        public static LongNumber ToLongNumber(this string s)
+        {
+            return new LongNumber(s);
+        }
+
+        public static LongNumber ToLongNumber(this StringBuilder s)
+        {
+            return new LongNumber(s.ToString());
         }
     }
 }
