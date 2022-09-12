@@ -41,6 +41,39 @@ namespace Task1_3
             return !(a > b);
         }
 
+        public static bool operator ==(LongNumber a, LongNumber b)
+        {
+            if (a.value.Length != b.value.Length) return false;
+            else
+            {
+                for (int i = 0; i < a.value.Length; i++)
+                    if (a.value[i] != b.value[i]) 
+                        return false;
+            }
+
+            return true;
+        }
+
+        public static bool operator !=(LongNumber a, LongNumber b)
+        {
+            return !(a == b);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            throw new NotImplementedException();
+        }
+
         public static LongNumber operator +(LongNumber a, LongNumber b)
         {
             LongNumber result = new LongNumber("");
@@ -73,7 +106,16 @@ namespace Task1_3
             return result;
         }
 
+        //TODO
         public static LongNumber operator *(LongNumber a, LongNumber b)
+        {
+            LongNumber result = new LongNumber("0");
+
+            return result;
+        }
+
+        //TODO
+        public static LongNumber operator /(LongNumber a, LongNumber b)
         {
             LongNumber result = new LongNumber("0");
 
