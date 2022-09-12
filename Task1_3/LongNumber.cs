@@ -51,6 +51,9 @@ namespace Task1_3
             { a1 = a; b1 = b; }
             else { a1 = b; b1 = a; }
 
+            a1 = new LongNumber(a1);
+            b1 = new LongNumber(b1);
+
             b1.value = new string('0', a1.value.Length - b1.value.Length) + b1.value;
 
             int mem = 0;
@@ -66,8 +69,6 @@ namespace Task1_3
             }
 
             if (mem == 1) result.value = (1).ToString() + result.value;
-
-            b1.value.TrimStart('0');
 
             return result;
         }
@@ -87,17 +88,21 @@ namespace Task1_3
 
             if (a.value.Length > b.value.Length)
             { a1 = a; b1 = b; }
-            else if (b > a)
-            { a1 = b; b1 = a; }
+            else if (a > b)
+            { a1 = a; b1 = b; }
             else 
             { a1 = b; b1 = a; }
 
             a1 = new LongNumber(a1);
+            b1 = new LongNumber(b1);
+
+            int stop_at = a1.value.Length - b1.value.Length;
+
             b1.value = new string('0', a1.value.Length - b1.value.Length) + b1.value;
 
             // b1 меньше
 
-            for (int i = a1.value.Length - 1; i >= 0; i--)
+            for (int i = a1.value.Length - 1; i >= stop_at; i--)
             {
                 int sub_result = (int)(a1.value[i] - '0') - (int)(b1.value[i] - '0');
 
@@ -126,7 +131,6 @@ namespace Task1_3
                         }
                     }
                 }
-
                 
                 result.value = (sub_result).ToString() + result.value;
             }

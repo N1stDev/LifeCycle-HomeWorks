@@ -4,7 +4,7 @@
     {
         private static void Main(string[] args)
         {
-            LongNumber a = new LongNumber("220000");
+            LongNumber a = new LongNumber("100");
             LongNumber b = new LongNumber("12");
 
             Console.WriteLine(a > b);
