@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Task1_3
 {
@@ -181,6 +182,47 @@ namespace Task1_3
         public static LongNumber operator *(LongNumber a, LongNumber b)
         {
             LongNumber result = new LongNumber("0");
+
+            LongNumber a1, b1;
+
+            if (a._value.Length > b._value.Length)
+            { a1 = a; b1 = b; }
+            else { a1 = b; b1 = a; }
+
+            LongNumber[] sum = new LongNumber[b1._value.Length];
+
+            //b1._value = new string('0', a1._value.Length - b1._value.Length) + b1._value;
+
+            
+
+            for (int j = b1._value.Length - 1; j >= 0; j--)
+            {
+                string curNum = "";
+                int mem = 0;
+                for (int i = a1._value.Length - 1; i >= 0; i--)
+                {
+                    int sub_result = (int)(a1._value[i] - '0') * (int)(b1._value[j] - '0') + mem;
+
+                    if (sub_result >= 10 && i != 0)
+                    {
+                        mem = sub_result / 10;
+                        sub_result = sub_result % 10;
+                    }
+                    else
+                    {
+                        mem = 0;
+                    }
+
+                    curNum = Convert.ToString(sub_result) + curNum;
+                }
+                sum[b1._value.Length - j - 1] = new LongNumber(curNum);
+            }
+
+            for (int i = 0; i < sum.Length; i++)
+            {
+                sum[i]._value = sum[i]._value + new string('0', i);
+                result = result + sum[i];
+            }
 
             return result;
         }

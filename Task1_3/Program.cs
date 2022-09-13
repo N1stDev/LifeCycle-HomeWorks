@@ -17,6 +17,10 @@
             Console.WriteLine((bool)a);
             Console.WriteLine(LongNumber.TryParse("", out c));
             Console.WriteLine("123".ToLongNumber().value);
+
+            LongNumber d = new LongNumber("123456789");
+            LongNumber e = new LongNumber("77777");
+            Console.WriteLine((d * e).value);
         }
     }
 
