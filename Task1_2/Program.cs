@@ -5,26 +5,24 @@ namespace Task1_2
     class StringList
     {
         string[] strList;
-        int curCount;
+        int curCount = 0;
         int maxCount;
 
         public StringList(int listSize = 100)
         {
             if (listSize <= 0)
             {
-                Console.WriteLine("Incorrect size! Array len is set to default=100");
-                listSize = 100;
+                throw new Exception("List size can not be less than 1");
             }
             strList = new string[listSize];
-            curCount = 0;
             maxCount = listSize;
         }
 
-        public void Insert(string str)
+        public void Append(string str)
         {
             if (curCount == maxCount)
             {
-                Console.WriteLine("Error! Max len has been reached");
+                throw new Exception("Max count detected!");
             }
             else
             {
@@ -37,41 +35,28 @@ namespace Task1_2
         {
             if (pos < curCount && pos >= 0)
             {
-                for (int i = 0; i < curCount; i++)
+                for (int i = pos; i < curCount; i++)
                 {
-                    if (i == curCount - 1)
-                    {
-                        strList[pos] = null;
-                    }
-                    else if (i >= pos)
-                    {
-                        strList[pos] = strList[pos + 1];
-                    }
+                    strList[pos] = strList[pos + 1];
                 }
                 curCount--;
             }
             else
             {
-                Console.WriteLine("Incorrect index!");
+                throw new Exception("Incorrect index to delete!");
             }
         }
 
         public int Search(string str)
         {
-            int pos = -1;
             for (int i = 0; i < curCount; i++)
             {
                 if (strList[i] == str)
                 {
-                    pos = i;
-                    break;
+                    return i;
                 }
             }
-            if (pos == -1)
-            {
-                Console.WriteLine("String has not been found! -1 returned");
-            }
-            return pos;
+            return -1;
         }
 
         public void Update(int pos, string newstr)
@@ -83,13 +68,13 @@ namespace Task1_2
                     if (i == pos)
                     {
                         strList[i] = newstr;
-                        break;
+                        return;
                     }
                 }
             }
             else
             {
-                Console.WriteLine("Incorrect index!");
+                throw new Exception("Incorrect index to update!");
             }
         }
 
@@ -101,17 +86,19 @@ namespace Task1_2
             }
             else
             {
-                Console.WriteLine("Incorrect index! Empty string returned");
-                return "";
+                throw new Exception("Incorrect index to get string!");
             }
         }
 
-        public void Print()
+        public string Str()
         {
+            string res = "";
             for (int i = 0; i < curCount; i++)
             {
-                Console.WriteLine(strList[i]);
+                res += strList[i] + "\n";
             }
+
+            return res;
         }
     }
 
@@ -120,90 +107,10 @@ namespace Task1_2
         static void Main()
         {
             StringList stringList = new StringList();
-            int inputPos;
-            string inputStr;
 
-            while (true)
-            {
-                int choice = Menu();
-                try
-                {
-                    switch (choice)
-                    {
-                        case 1:
-                            Console.Write("Enter a string: ");
-                            stringList.Insert(Console.ReadLine());
-                            break;
-                        case 2:
-                            Console.Write("Enter a number: ");
-                            stringList.Delete(Convert.ToInt32(Console.ReadLine()));
-                            break;
-                        case 3:
-                            Console.Write("Enter a string: ");
-                            int pos = stringList.Search(Console.ReadLine());
-                            Console.WriteLine($"Found! Position is {pos}");
-                            break;
-                        case 4:
-                            Console.Write("Enter a string: ");
-                            inputStr = Console.ReadLine();
-                            Console.Write("Enter a number: ");
-                            inputPos = Convert.ToInt32(Console.ReadLine());
-                            stringList.Update(inputPos, inputStr);
-                            break;
-                        case 5:
-                            Console.Write("Enter a number: ");
-                            inputPos = Convert.ToInt32(Console.ReadLine());
-                            string str = stringList.GetAt(inputPos);
-                            Console.WriteLine($"Found! String is {str}");
-                            break;
-                        case 6:
-                            stringList.Print();
-                            break;
-                        case 7:
-                            Console.WriteLine("Program is finished!");
-                            return;
-
-                    }
-                }
-                catch
-                {
-                    Console.WriteLine("Incorrect input!");
-                }
-
-            }
-        }
-
-        static int Menu()
-        {
-            Console.WriteLine("Choose action number: ");
-            Console.WriteLine("1. Insert string");
-            Console.WriteLine("2. Delete string");
-            Console.WriteLine("3. Search string");
-            Console.WriteLine("4. Update string");
-            Console.WriteLine("5. Get string");
-            Console.WriteLine("6. Print string list");
-            Console.WriteLine("7. Exit");
-
-            while (true)
-            {
-                try
-                {
-                    Console.Write("Enter a number: ");
-                    int choice = Convert.ToInt32(Console.ReadLine());
-                    if (choice >= 1 && choice <= 7)
-                    {
-                        return choice;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Incorrect number! Try again!");
-                    }
-                }
-                catch
-                {
-                    Console.WriteLine("Incorrect input! Try again!");
-                }
-            }
+            stringList.Append("asdasdd");
+            stringList.Append("erwerwr");
+            Console.WriteLine(stringList.Str());
         }
     }
 }
