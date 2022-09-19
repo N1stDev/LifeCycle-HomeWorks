@@ -26,7 +26,7 @@ namespace Task2_3
             AddNode(root, newText, parentText);
         }
 
-        private void AddNode(Node node, string newText, string? parentText = null)
+        private void AddNode(Node node, string newText, string parentText)
         {
             if (node.text == parentText)
             {
