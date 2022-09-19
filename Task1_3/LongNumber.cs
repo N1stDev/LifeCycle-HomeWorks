@@ -178,7 +178,6 @@ namespace Task1_3
             return result;
         }
 
-        //TODO
         public static LongNumber operator *(LongNumber a, LongNumber b)
         {
             LongNumber result = new LongNumber("0");

@@ -4,21 +4,27 @@ namespace Task2_3
     class Node
     {
         public List<Node> children = new();
-        public string? text;
-        public Node(string? t = null)
+        public string text;
+
+        public Node(string t = "none")
         {
             text = t;
+        }
+
+        public override string ToString()
+        {
+            return text;
         }
     }
 
     class NodeList
     {
         private Node root = new();
-        private List<string>? resArr;
+        private List<string> resArr = new();
 
-        public void Append(string newText, string? parentText = null)
+        public void Append(string newText, string parentText = "none")
         {
-            if (parentText == null)
+            if (parentText == "none")
             {
                 root.text = newText;
                 return;
@@ -84,27 +90,68 @@ namespace Task2_3
             }
         }
 
-        public void Print()
+        public Node GetNode(string text)
         {
-            resArr = new();
-            BuildTree(root);
-            PolishTree();
+            Node bufferNode = root;
+            bool nodeFound = false;
 
-            for (int i = resArr.Count - 1; i >= 0; i--)
+            recurse(bufferNode);
+
+            if (nodeFound)
+                return bufferNode;
+            return null;
+
+            void recurse(Node foundNode)
             {
-                Console.WriteLine(resArr[i]);
+                if (foundNode.text == text)
+                {
+                    bufferNode = foundNode;
+                    nodeFound = true;
+                    return;
+                }
+
+                foreach (Node n in foundNode.children)
+                {
+                    recurse(n);
+
+                    if (nodeFound) return;
+                }
             }
         }
 
-        private void PolishTree()
+        public bool GetNodeFromArg(string text, out Node node)
         {
-            for (int i = resArr.Count - 2; i >= 0; i--)
+            node = GetNode(text);
+            if (node == null)
+                return false;
+            return true;
+        }
+
+        public override string ToString()
+        {
+            string s = "";
+
+            resArr.Clear();
+            BuildTree(root);
+            PolishTree();
+
+            foreach (string line in resArr)
             {
-                for (int j = 0; j < resArr[i].Length; j++)
+                s = line + '\n' + s;
+            }
+
+            return s;
+
+            void PolishTree()
+            {
+                for (int i = resArr.Count - 2; i >= 0; i--)
                 {
-                    if (resArr[i][j] == '|' && (resArr[i + 1][j] == '└' || resArr[i + 1][j] == ' '))
+                    for (int j = 0; j < resArr[i].Length; j++)
                     {
-                        resArr[i] = resArr[i].Remove(j, 1).Insert(j, " ");
+                        if (resArr[i][j] == '|' && (resArr[i + 1][j] == '└' || resArr[i + 1][j] == ' '))
+                        {
+                            resArr[i] = resArr[i].Remove(j, 1).Insert(j, " ");
+                        }
                     }
                 }
             }

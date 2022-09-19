@@ -18,9 +18,21 @@
             nl.Append("ch3.2", "ch3");
             nl.Append("ch3.2.1", "ch3.2");
 
-            nl.Print();
+            Console.WriteLine(nl);
 
+            // Создаем пустую ноду
+            Node n;
 
+            // запускаем поиск (success будет true, если нода найдена)
+            bool success = nl.GetNodeFromArg("ch2.1", out n);
+
+            Console.WriteLine(success);
+            Console.WriteLine(n);
+
+            success = nl.GetNodeFromArg("asdasd", out n);
+
+            Console.WriteLine(success);
+            Console.WriteLine(n);
 
             return 0;
         }
