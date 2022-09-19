@@ -1,11 +1,11 @@
 ﻿
-namespace Task2_3
+namespace Task2_3_test
 {
     class Node
     {
         public List<Node> children = new();
         public string? text;
-        public Node(string? t = null)
+        public Node(string? t=null)
         {
             text = t;
         }
@@ -15,8 +15,8 @@ namespace Task2_3
     {
         Node root = new();
         List<string>? resArr;
-
-        public void Append(string newText, string? parentText = null)
+      
+        public void Append(string newText, string? parentText=null)
         {
             if (parentText == null)
             {
@@ -27,16 +27,16 @@ namespace Task2_3
         }
 
         void AddNode(Node node, string newText, string? parentText = null)
-        {
+        {            
             if (node.text == parentText)
             {
                 node.children.Add(new Node(newText));
                 return;
             }
-
+        
             for (int i = 0; i < node.children.Count; i++)
             {
-                AddNode(node.children[i], newText, parentText);
+                AddNode(node.children[i], newText, parentText); 
             }
         }
 
@@ -48,7 +48,7 @@ namespace Task2_3
             }
 
             int lc;
-            for (int i = node.children.Count - 1; i >= 0; i--)
+            for (int i = node.children.Count-1; i >= 0; i--)
             {
                 if (i == node.children.Count - 1)
                 {
