@@ -13,8 +13,8 @@ namespace Task2_3
 
     class NodeList
     {
-        Node root = new();
-        List<string>? resArr;
+        private Node root = new();
+        private List<string>? resArr;
 
         public void Append(string newText, string? parentText = null)
         {
@@ -26,7 +26,7 @@ namespace Task2_3
             AddNode(root, newText, parentText);
         }
 
-        void AddNode(Node node, string newText, string? parentText = null)
+        private void AddNode(Node node, string newText, string? parentText = null)
         {
             if (node.text == parentText)
             {
@@ -40,7 +40,7 @@ namespace Task2_3
             }
         }
 
-        void BuildTree(Node node, int level = 0, int lastChild = 0)
+        private void BuildTree(Node node, int level = 0, int lastChild = 0)
         {
             if (node == null)
             {
@@ -96,7 +96,7 @@ namespace Task2_3
             }
         }
 
-        void PolishTree()
+        private void PolishTree()
         {
             for (int i = resArr.Count - 2; i >= 0; i--)
             {
