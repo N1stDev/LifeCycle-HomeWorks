@@ -1,4 +1,6 @@
 ﻿
+using static System.Net.Mime.MediaTypeNames;
+
 namespace Task2_3
 {
     class Node
@@ -13,7 +15,7 @@ namespace Task2_3
 
         public override string ToString()
         {
-            return text;
+            return "<node: " + text + ">";
         }
     }
 
@@ -22,8 +24,12 @@ namespace Task2_3
         private Node root = new();
         private List<string> resArr = new();
 
-        public void Append(string newText, string parentText = "none")
+        //Здесь у аргументов есть приставка in, что не позволяет их изменять
+        public void Append(in string newText, in string parentText = "none")
         {
+            //Только для чтения, компилятор выдает ошибку
+            //newText = "";
+
             if (parentText == "none")
             {
                 root.text = newText;
@@ -119,12 +125,21 @@ namespace Task2_3
             }
         }
 
-        public bool GetNodeFromArg(string text, out Node node)
+        public bool GetNodeOut(string text, out Node node)
         {
             node = GetNode(text);
             if (node == null)
                 return false;
             return true;
+        }
+
+        public void GetNodeRefBool(string text, out Node node, ref bool success)
+        {
+            node = GetNode(text);
+            if (node == null)
+                success = false;
+            else
+                success = true;
         }
 
         public override string ToString()
@@ -155,6 +170,14 @@ namespace Task2_3
                     }
                 }
             }
+        }
+    }
+
+    static class NodeListExtentions
+    {
+        public static Node ToNode(this string a)
+        {
+            return new Node(a);
         }
     }
 }
