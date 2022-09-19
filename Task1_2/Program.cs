@@ -37,7 +37,14 @@ namespace Task1_2
             {
                 for (int i = pos; i < curCount; i++)
                 {
-                    strList[pos] = strList[pos + 1];
+                    if (i == maxCount - 1)
+                    {
+                        strList[i] = null;
+                    }
+                    else
+                    {
+                        strList[pos] = strList[pos + 1];
+                    }
                 }
                 curCount--;
             }
