@@ -38,6 +38,40 @@ namespace Task2_3
             AddNode(root, newText, parentText);
         }
 
+        public bool AppendPath(string newText, string path = "")
+        {
+            path = path.TrimEnd('/');
+            path = path.TrimStart('/');
+            if (path == "") path = root.text;
+            string[] nodes = path.Split('/');
+            int path_pointer = 0;
+            Node pointer = root;
+
+            if (path == root.text)
+            {
+                pointer.children.Add(new Node(newText));
+                return true;
+            }
+
+            while (true)
+            {
+                pointer = pointer.children.Find(x => x.text == nodes[path_pointer]);
+                if (pointer == null)
+                    return false;
+
+                path_pointer += 1;
+
+                if (path_pointer == nodes.Length)
+                {
+                    foreach (Node n in pointer.children)
+                        if (n.text == newText) return false;
+
+                    pointer.children.Add(new Node(newText));
+                    return true;
+                }
+            }
+        }
+
         private void AddNode(Node node, string newText, string parentText)
         {
             if (node.text == parentText)

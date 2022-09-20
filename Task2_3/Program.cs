@@ -7,21 +7,18 @@
             NodeList nl = new();
 
             nl.Append("root");
-            nl.Append("ch1", "root");
-            nl.Append("ch2", "root");
-            nl.Append("ch3", "root");
-            nl.Append("ch4", "root");
-            nl.Append("ch1.1", "ch1");
-            nl.Append("ch1.2", "ch1");
-            nl.Append("ch2.1", "ch2");
-            nl.Append("ch3.1", "ch3");
-            nl.Append("ch3.2", "ch3");
-            nl.Append("ch3.2.1", "ch3.2");
+            nl.AppendPath("a", "/");
+            nl.AppendPath("b", "/a");
+            nl.AppendPath("c", "/a/b");
+            nl.AppendPath("d", "/a/b");
+            nl.AppendPath("e", "/");
+            nl.AppendPath("f", "/e");
+            nl.AppendPath("f", "/");
 
             Console.WriteLine(nl);
 
             Console.WriteLine("Стандартный способ получения информации через return:");
-            Console.WriteLine(nl.GetNode("ch2.1"));
+            Console.WriteLine(nl.GetNode("e"));
 
             // Создаем пустую ноду
             Node n;
@@ -50,6 +47,8 @@
 
             Console.WriteLine("Преобразование строки в ноду:");
             Console.WriteLine("тестовая нода".ToNode());
+
+            nl.AppendPath("b", "aaa/bbb");
 
             return 0;
         }
