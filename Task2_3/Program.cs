@@ -24,7 +24,7 @@
             Node n;
 
             // запускаем поиск (success будет true, если нода найдена)
-            bool success = nl.GetNodeOut("ch2.1", out n);
+            bool success = nl.GetNodeOut("e", out n);
 
             Console.WriteLine("Получилось ли получить информацию через out:");
             Console.WriteLine(success);
@@ -38,7 +38,7 @@
             Console.WriteLine("Получение информации через out:");
             Console.WriteLine(n);
 
-            nl.GetNodeRefBool("ch2.1", out n, ref success);
+            nl.GetNodeRefBool("e", out n, ref success);
 
             Console.WriteLine("Здесь переменная success передеается в функцию по ссылке:");
             Console.WriteLine(success);
@@ -47,8 +47,6 @@
 
             Console.WriteLine("Преобразование строки в ноду:");
             Console.WriteLine("тестовая нода".ToNode());
-
-            nl.AppendPath("b", "aaa/bbb");
 
             return 0;
         }

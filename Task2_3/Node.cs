@@ -40,12 +40,13 @@ namespace Task2_3
 
         public bool AppendPath(string newText, string path = "")
         {
+            newText = newText.Split('/')[0];
             path = path.TrimEnd('/');
             path = path.TrimStart('/');
             if (path == "") path = root.text;
             string[] nodes = path.Split('/');
             int path_pointer = 0;
-            Node pointer = root;
+            Node? pointer = root;
 
             if (path == root.text)
             {
@@ -130,7 +131,7 @@ namespace Task2_3
             }
         }
 
-        public Node GetNode(string text)
+        public Node? GetNode(string text)
         {
             Node bufferNode = root;
             bool nodeFound = false;
