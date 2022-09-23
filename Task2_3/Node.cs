@@ -30,6 +30,11 @@ namespace Task2_3
             //Только для чтения, компилятор выдает ошибку
             //newText = "";
 
+            if (newText.Contains("/"))
+            {
+                throw new Exception("/ is not available in name");
+            }
+
             if (parentText == "none")
             {
                 root.text = newText;
@@ -40,7 +45,10 @@ namespace Task2_3
 
         public bool AppendPath(string newText, string path = "")
         {
-            newText = newText.Split('/')[0];
+            if (newText.Contains("/"))
+            {
+                throw new Exception("/ is not available in name");
+            }
             path = path.TrimEnd('/');
             path = path.TrimStart('/');
             if (path == "") path = root.text;
