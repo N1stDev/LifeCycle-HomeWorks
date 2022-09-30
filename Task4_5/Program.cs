@@ -41,7 +41,7 @@ namespace Task4_5
         
         static bool IsDataCorrect(Point[] points)
         {
-            // проверим пересекаются ли две пары проивоположных прямых
+            // проверим пересекаются ли противоположные отрезки
             for (int i = 0; i < 2; i++)
             {
                 //формируем уравнения двух прямых
@@ -122,7 +122,7 @@ namespace Task4_5
 
         public static int Main()
         {
-            // координаты задаются по часовой стрелке
+            // координаты задаются по порядку (по кругу)
             Point[] points = new Point[] { new Point(0, 0), new Point(0, 30), new Point(30, 30), new Point(30, 0) };
 
             if (!IsDataCorrect(points))
