@@ -93,33 +93,7 @@ namespace Task4_5
             return true;
         }
 
-        /*static Point[] SortedPoints(Point[] points) // сортировка по x, если x1 = x2 - то их по y
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3 - i; j++)
-                {
-                    if (points[j].X > points[j + 1].X)
-                    {
-                        Point tmp = points[j];
-                        points[j] = points[j + 1];
-                        points[j + 1] = tmp;
-                    }
-                    else if (points[j].X == points[j + 1].X)
-                    {
-                        if (points[j].Y > points[j + 1].Y)
-                        {
-                            Point tmp = points[j];
-                            points[j] = points[j + 1];
-                            points[j + 1] = tmp;
-                        }
-                    }
-                }
-            }
-            return points;
-        }*/
-
-        static double GetSquare(Point[] points) // вычисление площади по формуле Гаусса
+        static void GetSquare(Point[] points, out double square) // вычисление площади по формуле Гаусса
         {
             double num1 = 0;
             for (int i = 0; i < 3; i++)
@@ -133,18 +107,17 @@ namespace Task4_5
                 num2 += points[i + 1].X * points[i].Y;
             }
 
-            return Math.Abs(num1 + points[3].X * points[0].Y - num2 - points[0].X * points[3].Y) / 2;
+            square =  Math.Abs(num1 + points[3].X * points[0].Y - num2 - points[0].X * points[3].Y) / 2;
         }
 
-        static double GetPerimeter(Point[] points)
+        static void GetPerimeter(Point[] points, out double perimeter)
         {
-            double perimeter = 0;
+            perimeter = 0;
             for (int i = 0; i < 4; i++)
             {
                 perimeter += Math.Sqrt(Math.Pow(points[(i + 1) % 4].X - points[i].X, 2) +
                     Math.Pow(points[(i + 1) % 4].Y - points[i].Y, 2));
             }
-            return perimeter;
         }      
 
         public static int Main()
@@ -156,9 +129,11 @@ namespace Task4_5
             {
                 throw new Exception("Incorrect data!");
             }
-            
-            double square = Math.Round(GetSquare(points), 3);
-            double perimeter = Math.Round(GetPerimeter(points), 3);
+
+            double square;
+            GetSquare(points, out square);
+            double perimeter;
+            GetPerimeter(points, out perimeter);
 
             Console.WriteLine("Perimeter: " + Convert.ToString(perimeter));
             Console.WriteLine("Square: " + Convert.ToString(square));
