@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Reflection.PortableExecutable;
 
 namespace Task4_5
 {
@@ -25,8 +26,8 @@ namespace Task4_5
     }
     class Program
     {
-        /*
-        static bool IsOnSegment(float x, float y, float x1, float y1, float x2, float y2)
+        
+        static bool IsOnSegment(double x, double y, double x1, double y1, double x2, double y2)
         {
             if ((x <= x1 && x >= x2) || (x <= x2 && x>= x1))
             {
@@ -37,40 +38,62 @@ namespace Task4_5
             }
             return false;
         }
-        static bool CheckConvex(Point[] points)
+        
+        static bool IsDataCorrect(Point[] points)
         {
             // проверим пересекаются ли две пары проивоположных прямых
             for (int i = 0; i < 2; i++)
             {
                 //формируем уравнения двух прямых
                 // ax + by = c
-                float a1 = 1 / (points[(i+1) % 4].X - points[i].X);
-                float b1 = 1 / (points[i].Y - points[(i + 1) % 4].Y);
-                float c1 = points[i].X / (points[(i + 1) % 4].X - points[i].X) -
+                double a1 = 1 / (points[(i+1) % 4].X - points[i].X);
+                double b1 = 1 / (points[i].Y - points[(i + 1) % 4].Y);
+                double c1 = points[i].X / (points[(i + 1) % 4].X - points[i].X) -
                     points[i].Y / (points[(i + 1) % 4].Y - points[i].Y);
 
-                float a2 = 1 / (points[(i + 3) % 4].X - points[i + 2].X);
-                float b2 = 1 / (points[i + 2].Y - points[(i + 3) % 4].Y);
-                float c2 = points[i + 2].X / (points[(i + 3) % 4].X - points[i + 2].X) -
+                double a2 = 1 / (points[(i + 3) % 4].X - points[i + 2].X);
+                double b2 = 1 / (points[i + 2].Y - points[(i + 3) % 4].Y);
+                double c2 = points[i + 2].X / (points[(i + 3) % 4].X - points[i + 2].X) -
                     points[i + 2].Y / (points[(i + 3) % 4].Y - points[i + 2].Y);
 
                 if (a1 * b2 != a2 * b1)  // если прямые не параллельны - ищем где они пересекаются
                 {
-                    float x = (c1 * b2 - c2 * b1) / (a1 * b2 - a2 * b1);
-                    float y = (a1 * c2 - a2 * c1) / (a1 * b2 - a2 * b1);
+                    double x = (c1 * b2 - c2 * b1) / (a1 * b2 - a2 * b1);
+                    double y = (a1 * c2 - a2 * c1) / (a1 * b2 - a2 * b1);
                     bool onFirst = IsOnSegment(x, y, points[i].X, points[i+1].X, points[i].Y, points[i + 1].Y);
                     bool onSecond = IsOnSegment(x, y, points[i+2].X, points[i+2].Y, points[(i+3)%4].X, points[(i+3)%4].Y);
-                    if (onFirst || onSecond) // если точка пересечения лежит на одном из отрезков - невыпуклый
+                    if (onFirst && onSecond) // если точка пересечения лежит на обоих отрезках - они пересекаются
                     {
                         return false;
                     }
                 }
 
             }
-            return true;
-        }*/
 
-        static Point[] SortedPoints(Point[] points) // сортировка по x, если x1 = x2 - то их по y
+            //проверим лежат ли на одной прямой смежные стороны
+            for (int i = 0; i < 4; i++)
+            {
+                //формируем уравнения двух прямых
+                // ax + by = c
+                double a1 = 1 / (points[(i + 1) % 4].X - points[i].X);
+                double b1 = 1 / (points[i].Y - points[(i + 1) % 4].Y);
+                double c1 = points[i].X / (points[(i + 1) % 4].X - points[i].X) -
+                    points[i].Y / (points[(i + 1) % 4].Y - points[i].Y);
+
+                double a2 = 1 / (points[(i + 2) % 4].X - points[(i + 1) % 4].X);
+                double b2 = 1 / (points[(i + 1) % 4].Y - points[(i + 2) % 4].Y);
+                double c2 = points[(i + 1) % 4].X / (points[(i + 2) % 4].X - points[(i + 1) % 4].X) -
+                    points[(i + 1) % 4].Y / (points[(i + 2) % 4].Y - points[(i + 1) % 4].Y);
+
+                if (a1 * b2 == a2 * b1)  // если смежные прямые параллельны - они лежат на одной прямой
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /*static Point[] SortedPoints(Point[] points) // сортировка по x, если x1 = x2 - то их по y
         {
             for (int i = 0; i < 3; i++)
             {
@@ -94,7 +117,7 @@ namespace Task4_5
                 }
             }
             return points;
-        }
+        }*/
 
         static double GetSquare(Point[] points) // вычисление площади по формуле Гаусса
         {
@@ -122,17 +145,16 @@ namespace Task4_5
                     Math.Pow(points[(i + 1) % 4].Y - points[i].Y, 2));
             }
             return perimeter;
-        }
-        
+        }      
 
         public static int Main()
         {
             // координаты задаются по часовой стрелке
-            Point[] points = new Point[] { new Point(0, 0), new Point(0, 50), new Point(100, 50), new Point(100, 0) };
+            Point[] points = new Point[] { new Point(0, 0), new Point(0, 30), new Point(30, 30), new Point(30, 0) };
 
-            for (int i = 0; i < 4; i++)
+            if (!IsDataCorrect(points))
             {
-                Console.WriteLine(Convert.ToString(points[i].X) + " " + Convert.ToString(points[i].Y));
+                throw new Exception("Incorrect data!");
             }
             
             double square = Math.Round(GetSquare(points), 3);
