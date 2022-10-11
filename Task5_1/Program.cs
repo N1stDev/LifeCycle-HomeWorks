@@ -21,8 +21,11 @@ namespace Task5_1
 
             int i = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("{0} = {1}", i, Enum.GetName(weekdays, i), "d");
-
+            if (0 < i && i < 8)
+                Console.WriteLine("{0} = {1}", i, Enum.GetName(weekdays, i), "d");
+            else { throw new Exception("Неверное число!"); }
+            Console.ReadKey();
+           
         }
     }
 

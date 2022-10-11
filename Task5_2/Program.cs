@@ -70,6 +70,7 @@ namespace Task5_2
             Type myGoods = typeof(Goods);
             foreach (string s in Enum.GetNames(myGoods))
                 Console.WriteLine("{0,-11}= {1}", s, Enum.Format(myGoods, Enum.Parse(myGoods, s), "d"));
+            Console.ReadKey();
         }
     }
 }
