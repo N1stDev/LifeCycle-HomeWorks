@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,8 +22,8 @@ namespace Task5_1
             int i = int.Parse(Console.ReadLine());
 
             Console.WriteLine("{0} = {1}", i, Enum.GetName(weekdays, i), "d");
-            
-                    }
+
+        }
     }
 
 }
