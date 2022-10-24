@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Pipes;
 
 class Node
 {
@@ -71,23 +72,31 @@ class Program
 {
     static void Main()
     {
-        string[] text = System.IO.File.ReadAllLines("INPUT.TXT");
+        NodeList nl;
+        int nodeCount;
+        int assumptionsCount;
 
-        string[] entries = text[0].Split(' ', StringSplitOptions.None);
-
-        int nodesCount = Convert.ToInt32(entries[0]);
-        int assumptionsCount = Convert.ToInt32(entries[1]);
-
-        NodeList nl = new NodeList(nodesCount);
-
-        for (int i = 0; i < assumptionsCount; i++)
+        using (var reader = System.IO.File.OpenText("INPUT.TXT"))
         {
-            entries = text[i + 1].Split(' ', StringSplitOptions.None);
+            int counter = 0;
+            string line = reader.ReadLine();
 
-            int index1 = Convert.ToInt32(entries[0]);
-            int index2 = Convert.ToInt32(entries[1]);
+            string[] entries = line.Split(' ');
 
-            nl.AddAssumption(index1, index2);
+            nodeCount = Convert.ToInt32(entries[0]);
+            assumptionsCount = Convert.ToInt32(entries[1]);
+
+            nl = new NodeList(nodeCount);
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                entries = line.Split(' ');
+
+                int index1 = Convert.ToInt32(entries[0]);
+                int index2 = Convert.ToInt32(entries[1]);
+
+                nl.AddAssumption(index1, index2);
+            }
         }
 
         if (nl.isDataCorrect)
