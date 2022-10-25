@@ -72,39 +72,16 @@ class Program
 {
     static void Main()
     {
-        NodeList nl;
-        int nodeCount;
-        int assumptionsCount;
+        
 
         using (StreamReader reader = new StreamReader("INPUT.TXT"))
         {
-            int counter = 0;
-            string line = reader.ReadLine();
-
-            string[] entries = line.Split();
-
-            nodeCount = Convert.ToInt32(entries[0]);
-            assumptionsCount = Convert.ToInt32(entries[1]);
-
-            nl = new NodeList(nodeCount);
-
-            while ((line = reader.ReadLine()) != null)
-            {
-                entries = line.Split();
-
-                int index1 = Convert.ToInt32(entries[0]);
-                int index2 = Convert.ToInt32(entries[1]);
-
-                nl.AddAssumption(index1, index2);
-            }
+            
         }
         using (StreamWriter writer = new StreamWriter("OUTPUT.TXT"))
         {
-            if (nl.isDataCorrect)
-               writer.Write("Yes");
-            else
-                writer.Write("No");
+
         }
-        
+
     }
 }
