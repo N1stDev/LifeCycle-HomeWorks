@@ -53,13 +53,19 @@ class CustomArray<T>
         arr = new T[n];
     }
 
+    public int CustomCompare(T val1, T val2)
+    {
+        return A.CustomCompare(val1, val2);
+    }
+
     public void Sort()
     {
         for (int i = 0; i < n - 1; i++)
         {
             for (int j = 0; j < n - i - 1; j++)
             {
-                //int res = CustomCompare(arr[j], arr[j + 1]);
+                A a = new();
+                int res = CustomCompare(arr[j], arr[j + 1]);
                 if (res == 1)
                 {
                     T tmp = arr[j];
@@ -120,5 +126,20 @@ class Program
         arr2[3] = "a";
         arr2[4] = "asasasaksal;ska";
         #endregion
+
+        arr1.Sort();
+        arr2.Sort();
+
+        Console.WriteLine("Первый массив после сортировки:");
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine(arr1[i]);
+        }
+
+        Console.WriteLine("Первый массив после сортировки:");
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine(arr2[i]);
+        }
     }
 }
