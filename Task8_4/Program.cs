@@ -32,6 +32,10 @@ class NodeList
 
     public void AddAssumption(int index1, int index2)
     {
+        if (!isDataCorrect)
+        {
+            return;
+        }
         Node greaterNode, lesserNode;
 
         greaterNode = nodes[index1 - 1];
@@ -46,24 +50,39 @@ class NodeList
         }
 
         lesserNode.greaterNodes.Add(greaterNode);
+        greaterNode.lesserNodes.Add(lesserNode);
 
-        recurse(greaterNode, greaterNode);
+        if (isDataCorrect)
+        {
+            var buffer = new List<Node>();
+            recurse(greaterNode, greaterNode, true, buffer);
+
+            foreach (Node n in buffer)
+            {
+                if (!greaterNode.lesserNodes.Contains(n))
+                    greaterNode.lesserNodes.Add(n);
+            }
+        }
     }
 
-    void recurse(Node currentNode, Node greaterNode)
+    void recurse(Node currentNode, Node greaterNode, bool isFirst, List<Node> buffer)
     {
-        List<Node> traverseList;
-
         foreach (Node n in currentNode.lesserNodes)
         {
-            recurse(n, greaterNode);
+            if (currentNode == greaterNode && !isFirst)
+            {
+                isDataCorrect = false;
+                return;
+            }
+            recurse(n, greaterNode, false, buffer);
         }
 
-        if (!isDataCorrect || currentNode.lesserNodes.Contains(greaterNode))
+        if (currentNode.lesserNodes.Contains(greaterNode))
         {
             isDataCorrect = false;
             return;
         }
+        buffer.Add(currentNode);
         currentNode.greaterNodes.Add(greaterNode);
     }
 }
@@ -101,10 +120,10 @@ class Program
         using (StreamWriter writer = new StreamWriter("OUTPUT.TXT"))
         {
             if (nl.isDataCorrect)
-               writer.Write("Yes");
+                writer.Write("Yes");
             else
                 writer.Write("No");
         }
-        
+
     }
 }
