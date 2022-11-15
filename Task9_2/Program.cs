@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.Generics;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -8,18 +9,6 @@ namespace Task9_2
     interface ICustomComparable<T>
     {
         int CustomCompare(T val1);
-    }
-
-    interface IEnumerable<T>
-    {
-        IEnumerator GetEnumerator();
-    }
-
-    interface IEnumerator
-    {
-        bool MoveObject();
-        object Current {get;}
-        void Reset();
     }
 
     class A: ICustomComparable<A>
@@ -66,7 +55,7 @@ namespace Task9_2
         }
     }
 
-    class CustomArray<T> : IEnumerable<T>, T : ICustomComparable<T>
+    class CustomArray<T> : IEnumerable<T> where T : ICustomComparable<T>
     {
         int n;
         T[] arr;
@@ -97,6 +86,16 @@ namespace Task9_2
             }
         }
 
+        public IEnumerator<T> GetEnumerator()
+        {
+            return arr.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return arr.GetEnumerator();
+        }
+
         public T this[int index]
         {
             get
@@ -124,17 +123,6 @@ namespace Task9_2
                 }
             }
         }
-
-        /*
-        bool MoveNext()
-        {
-
-        }
-
-        object Current {get; }
-
-        void Reset();
-        */
     }
 
     class Program
@@ -173,6 +161,9 @@ namespace Task9_2
             {
                 Console.WriteLine(arr2[i]);
             }
+
+            Console.WriteLine();
+            Console.WriteLine(arr1.GetEnumerator());
         }
     }
 }
