@@ -1,76 +1,78 @@
 ﻿interface ICustomComparable<T>
 {
-    int CustomCompare(T val1, T val2);
+    int CustomCompare(T val1);
 }
 
-class A: ICustomComparable<int>
+class A: ICustomComparable<A>
 {
-    public int CustomCompare(int val1, int val2)
+    int op1;
+    int op2;
+
+    public A(int a, int b)
     {
-        if (val1 > val2)
-        {
-            return 1;
-        }
-        else if (val1 == val2)
-        {
-            return 2;
-        }
-        else
-        {
-            return 3;
-        }
+        op1 = a;
+        op2 = b;
+    }
+
+    public int CustomCompare(A val1)
+    {
+        return (op1 + op2) - (val1.op1 + val1.op2);
+    }
+
+    public override string ToString()
+    {
+        return String.Format("op1: {0}, op2: {1}", op1, op2);
     }
 }
 
-class B: ICustomComparable<string>
+class B: ICustomComparable<B>
 {
-    public int CustomCompare(string val1, string val2)
-    {
-        int res = String.Compare(val1, val2);
+    public string op1;
+    public double op2;
 
-        if (res > 0)
-        {
-            return 1;
-        }
-        else if (res == 0)
-        {
-            return 2;
-        }
-        else
-        {
-            return 3;
-        }
+    public B(string a, double b)
+    {
+        op1 = a;
+        op2 = b;
+    }
+
+    public int CustomCompare(B val1)
+    {
+        return (int)(op1.Length + op2) - (int)(val1.op1.Length + val1.op2);
+    }
+
+    public override string ToString()
+    {
+        return String.Format("op1: {0}, op2: {1}", op1, op2);
     }
 }
 
-class CustomArray<T>
+class CustomArray<T> where T : ICustomComparable<T>
 {
     int n;
     T[] arr;
+
     public CustomArray(int count)
     {
         n = count;
         arr = new T[n];
     }
 
-    public int CustomCompare(T val1, T val2)
-    {
-        return A.CustomCompare(val1, val2);
-    }
-
     public void Sort()
     {
-        for (int i = 0; i < n - 1; i++)
+        bool flag = true;
+
+        while (flag)
         {
-            for (int j = 0; j < n - i - 1; j++)
+            flag = false;
+            for (int i = 1; i < n; i++)
             {
-                A a = new();
-                int res = CustomCompare(arr[j], arr[j + 1]);
-                if (res == 1)
+                if (arr[i].CustomCompare(arr[i - 1]) < 0)
                 {
-                    T tmp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = tmp;
+                    flag = true;
+                    T tmp = arr[i];
+                    arr[i] = arr[i - 1];
+                    arr[i - 1] = tmp;
                 }
             }
         }
@@ -109,22 +111,22 @@ class Program
 {
     static void Main()
     {
-        CustomArray<int> arr1 = new(5);
+        CustomArray<A> arr1 = new(5);
         #region Заполняем первый массив
-        arr1[0] = -28;
-        arr1[1] = 14;
-        arr1[2] = 12;
-        arr1[3] = 0;
-        arr1[4] = -100;
+        arr1[0] = new(123, 12);
+        arr1[1] = new(182, 74);
+        arr1[2] = new(89, 29);
+        arr1[3] = new(45, 92);
+        arr1[4] = new(20, 7);
         #endregion
 
-        CustomArray<string> arr2 = new(5);
+        CustomArray<B> arr2 = new(5);
         #region Заполняем второй массив
-        arr2[0] = "aaaa";
-        arr2[1] = "bbbb";
-        arr2[2] = "ksdjsdls";
-        arr2[3] = "a";
-        arr2[4] = "asasasaksal;ska";
+        arr2[0] = new("aaaa", 783);
+        arr2[1] = new("asdkd", 1231);
+        arr2[2] = new("asudioasd", 8993);
+        arr2[3] = new("ask", 120);
+        arr2[4] = new("asodipadsi", 483);
         #endregion
 
         arr1.Sort();
@@ -136,7 +138,7 @@ class Program
             Console.WriteLine(arr1[i]);
         }
 
-        Console.WriteLine("Первый массив после сортировки:");
+        Console.WriteLine("Второй массив после сортировки:");
         for (int i = 0; i < 5; i++)
         {
             Console.WriteLine(arr2[i]);
