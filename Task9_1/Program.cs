@@ -111,13 +111,14 @@ class Program
 {
     static void Main()
     {
-        CustomArray<A> arr1 = new(5);
+        CustomArray<A> arr1 = new(6);
         #region Заполняем первый массив
         arr1[0] = new(123, 12);
         arr1[1] = new(182, 74);
-        arr1[2] = new(89, 29);
+        arr1[5] = new(89, 29);
         arr1[3] = new(45, 92);
         arr1[4] = new(20, 7);
+        arr1[2] = new(20, 7);
         #endregion
 
         CustomArray<B> arr2 = new(5);
@@ -133,7 +134,7 @@ class Program
         arr2.Sort();
 
         Console.WriteLine("Первый массив после сортировки:");
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             Console.WriteLine(arr1[i]);
         }

@@ -15,14 +15,12 @@ static class ClothesSizeExtensions
 {
     public static string GetDescription(this ClothesSize size)
     {
-        if (((int)size) >= ((int)ClothesSize.S))
+        if ((int)size >= (int)ClothesSize.S)
         {
             return "Взрослый размер";
         }
-        else
-        {
-            return "Детский размер";
-        }
+
+        return "Детский размер";
     }
 }
 

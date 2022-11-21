@@ -54,10 +54,10 @@ namespace Task9_2
             return String.Format("op1: {0}, op2: {1}", op1, op2);
         }
     }
-
-    class CustomArray<T> : IEnumerable<T> where T : ICustomComparable<T>
+    
+    class CustomArray<T> : IEnumerable where T : ICustomComparable<T>
     {
-        int n;
+        int n, i=0;
         T[] arr;
 
         public CustomArray(int count)
@@ -86,15 +86,7 @@ namespace Task9_2
             }
         }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            return arr.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return arr.GetEnumerator();
-        }
+        public IEnumerator GetEnumerator() => arr.GetEnumerator();
 
         public T this[int index]
         {
@@ -151,19 +143,16 @@ namespace Task9_2
             arr2.Sort();
 
             Console.WriteLine("Первый массив после сортировки:");
-            for (int i = 0; i < 5; i++)
+            foreach (A i in arr1)
             {
-                Console.WriteLine(arr1[i]);
+                Console.WriteLine(i);
             }
-
+                
             Console.WriteLine("Второй массив после сортировки:");
-            for (int i = 0; i < 5; i++)
+            foreach (B i in arr2)
             {
-                Console.WriteLine(arr2[i]);
+                Console.WriteLine(i);
             }
-
-            Console.WriteLine();
-            Console.WriteLine(arr1.GetEnumerator());
         }
     }
 }
