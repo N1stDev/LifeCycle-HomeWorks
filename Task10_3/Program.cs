@@ -6,7 +6,7 @@ class NumberArray
 
     int[] array;
 
-    public NumberArray(int count)
+    public NumberArray(uint count)
     {
         array = new int[count];
     }
@@ -33,7 +33,7 @@ class NumberArray
 
     public NumberArray GetCopy()
     {
-        NumberArray newArray = new(array.Length);
+        NumberArray newArray = new((uint)array.Length);
 
         for (int i = 0; i < array.Length; i++)
         {
@@ -129,52 +129,123 @@ class Program
         }
     }
 
+    enum MenuOption
+    {
+        arrayNotCreated,
+        arrayCreated,
+        arrayIsReadyToBeSorted
+    }
+
     static void Main()
     {
-        int length = 20;
+        bool exitFlag = false;
+        MenuOption currentMenuOption = MenuOption.arrayNotCreated;
+        string input = "";
 
-        NumberArray arr1 = new(length);
+        NumberArray numberArray = new(0);
 
-        arr1.SetRandom(0, length);
-        NumberArray arr2 = arr1.GetCopy();
+        while (!exitFlag)
+        {
+            Console.Clear();
 
-        Console.WriteLine(
-            "Первый массив до сортировки пузырьком: " + arr1);
-        arr1.Sort(BubbleSort);
-        Console.WriteLine(
-            "Первый массив после сортировки пузырьком: " + arr1 + "\n");
+            if (currentMenuOption == MenuOption.arrayNotCreated)
+            {
+                Console.WriteLine("Введите длину требуемого массива:");
+                input = Console.ReadLine();
 
-        Console.WriteLine(
-            "Второй массив до сортировки слиянием: " + arr2);
-        arr1.Sort(MergeSort);
-        Console.WriteLine(
-            "Второй массив после сортировки слиянием: " + arr2 + "\n");
+                try
+                {
+                    uint length = Convert.ToUInt32(input);
+                    numberArray = new NumberArray(length);
+                    currentMenuOption = MenuOption.arrayCreated;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Введене некорректное значение.");
+                    Console.ReadKey();
+                }
+            }
+            else if (currentMenuOption == MenuOption.arrayCreated)
+            {
+                Console.WriteLine(numberArray);
+                Console.WriteLine("(1) Заполнить массив случайными числами");
+                Console.WriteLine("(2) Сортировать массив");
+                Console.WriteLine("(3) Заново создать массив");
+                Console.WriteLine("(4) Выйти из программы");
+                input = Console.ReadLine();
 
-        int length1 = 10000;
-        long time1 = 0;
-        long time2 = 0;
+                try
+                {
+                    uint choice = Convert.ToUInt32(input);
+                    
+                    if (choice == 1)
+                    {
+                        numberArray.SetRandom(0, numberArray.GetLength());
+                    }
+                    else if (choice == 2)
+                    {
+                        currentMenuOption = MenuOption.arrayIsReadyToBeSorted;
+                    }
+                    else if (choice == 3)
+                    {
+                        currentMenuOption = MenuOption.arrayNotCreated;
+                    }
+                    else if (choice == 4)
+                    {
+                        exitFlag = true;
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Введене некорректное значение.");
+                    Console.ReadKey();
+                }
+            }
+            else if (currentMenuOption == MenuOption.arrayIsReadyToBeSorted)
+            {
+                Console.WriteLine(numberArray);
+                Console.WriteLine("(1) Сортировать пузырьком");
+                Console.WriteLine("(2) Сортировать слиянием");
+                input = Console.ReadLine();
 
-        arr1 = new(length1);
-        arr1.SetRandom(0, length1);
-        arr2 = arr1.GetCopy();
+                try
+                {
+                    uint choice = Convert.ToUInt32(input);
+                    long time;
 
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        arr1.Sort(BubbleSort);
-        watch.Stop();
-        time1 = watch.ElapsedMilliseconds;
+                    if (choice == 1)
+                    {
+                        var watch = System.Diagnostics.Stopwatch.StartNew();
+                        numberArray.Sort(BubbleSort);
+                        watch.Stop();
+                        time = watch.ElapsedMilliseconds;
 
-        Console.WriteLine(
-            "На сортировку массива длиной " + length1 + " пузырьком ушло " +
-            time1 + " миллисекунд");
+                        Console.WriteLine(
+                            "На сортировку массива длиной " + numberArray.GetLength() + " пузырьком ушло " +
+                            time + " миллисекунд");
+                        Console.ReadKey();
+                    }
+                    else if (choice == 2)
+                    {
+                        var watch = System.Diagnostics.Stopwatch.StartNew();
+                        numberArray.Sort(MergeSort);
+                        watch.Stop();
+                        time = watch.ElapsedMilliseconds;
 
-        watch.Restart();
-        arr2.Sort(MergeSort);
-        watch.Stop();
-        time2 = watch.ElapsedMilliseconds;
+                        Console.WriteLine(
+                            "На сортировку массива длиной " + numberArray.GetLength() + " слиянием ушло " +
+                            time + " миллисекунд");
+                        Console.ReadKey();
+                    }
 
-        Console.WriteLine(
-            "На сортировку массива длиной " + length1 + " слиянием ушло " +
-            time2 + " миллисекунд");
-
+                    currentMenuOption = MenuOption.arrayCreated;
+                }
+                catch (Exception)
+                { 
+                    Console.WriteLine("Введене некорректное значение.");
+                    Console.ReadKey();
+                }
+            }
+        }
     }
 }
