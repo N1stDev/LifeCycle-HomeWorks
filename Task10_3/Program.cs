@@ -161,7 +161,7 @@ class Program
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Введене некорректное значение.");
+                    Console.WriteLine("Введено некорректное значение.");
                     Console.ReadKey();
                 }
             }
@@ -197,7 +197,7 @@ class Program
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Введене некорректное значение.");
+                    Console.WriteLine("Введено некорректное значение.");
                     Console.ReadKey();
                 }
             }
@@ -242,7 +242,7 @@ class Program
                 }
                 catch (Exception)
                 { 
-                    Console.WriteLine("Введене некорректное значение.");
+                    Console.WriteLine("Введено некорректное значение.");
                     Console.ReadKey();
                 }
             }
