@@ -1,41 +1,42 @@
 ﻿namespace Task11_1
 {
+    [AttributeUsage(AttributeTargets.Property)]
     class DescriptionAttribute : Attribute
     {
-        public DescriptionAttribute(string desc) => description = desc;
-        public string description { get; }
+        public DescriptionAttribute(string desc) => Description = desc;
+        public string Description { get; }
     }
     class FirstClass
     {
         [Description("Int property description")]
-        public int first { get; set; }
+        public int? First { get; set; }
 
         [Description("Float property description")]
-        public float second { get; set; }
+        public float? Second { get; set; }
 
         [Description("String property description")]
-        public string third { get; set; }
+        public string? Third { get; set; }
 
         [Description("String[] property description")]
-        public string[] forth { get; set; }
+        public string[]? Forth { get; set; }
 
         [Description("Int[] property description")]
-        public int[] fifth { get; set; }
+        public int[]? Fifth { get; set; }
 
         [Description("Float[] property description")]
-        public float[] sixth { get; set; }
+        public float[]? Sixth { get; set; }
 
         [Description("Double property description")]
-        public double seventh { get; set; }
+        public double? Seventh { get; set; }
 
         [Description("Double[] property description")]
-        public double[] eighth { get; set; }
+        public double[]? Eighth { get; set; }
 
         [Description("Bool property description")]
-        public bool nineth { get; set; }
+        public bool? Nineth { get; set; }
 
         [Description("Bool[] property description")]
-        public bool[] tenth { get; set; }
+        public bool[]? Tenth { get; set; }
     }
     class Program
     {
@@ -45,8 +46,11 @@
 
             foreach (var prop in fc.GetType().GetProperties())
             {
-                DescriptionAttribute MyAttribute = (DescriptionAttribute)Attribute.GetCustomAttribute(prop, typeof(DescriptionAttribute));
-                Console.WriteLine("{0} - {1}", prop.Name, MyAttribute.description);
+                DescriptionAttribute? MyAttribute = (DescriptionAttribute?)Attribute.GetCustomAttribute(prop, typeof(DescriptionAttribute));
+                if (MyAttribute != null)
+                {
+                    Console.WriteLine("{0} - {1}", prop.Name, MyAttribute.Description);
+                }
             }
         }
     }
