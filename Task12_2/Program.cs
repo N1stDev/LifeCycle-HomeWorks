@@ -19,7 +19,7 @@ namespace Task12_2
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			Console.WriteLine("д) Обычный вариант: ");
-			int[] array_d_1 = new int[array_quantity] {1, 10, 24, 3, 17, 6, 5, 0, 9, 11};
+			int[] array_d_1 = new int[array_quantity] {1,  10, 24,    3, 17,   6, 5, 0,  9,  11};
 			int[] array_d_2 = new int[array_quantity] {25, 101, 8, 1337, 45, 36, 78, 0, 97, 100};
 			
 			for (int i = 0; i < array_quantity; i++)
@@ -29,9 +29,7 @@ namespace Task12_2
 					for (int j = 0; j < array_quantity; j++)
 					{
 						if (array_d_2[j] % 5 == 0)
-						{
 							Console.Write($"[{array_d_1[i]} {array_d_2[j]}] ");
-						}
 					} 
 				}
 			}
@@ -57,11 +55,8 @@ namespace Task12_2
 			foreach (string word in array_e)
 			{
 				if (word.Contains("от") || word.Contains("оТ") || word.Contains("От") || word.Contains("ОТ"))
-				{
 					result_e.Add(word);
-				}
 			}
-
 			result_e.Sort();
 
 			foreach (string word in result_e)
@@ -148,18 +143,16 @@ namespace Task12_2
 
 			Console.WriteLine("з) Вариант через Linq: ");
 			
-			var ordered_array = from digit in array_z
-					    where digit % 2 == 0
-					    orderby digit
-					    select digit;
-			// Там получилось		
-
+			var ordered_array = from digit in array_z			// Здесь не сделаль	
+					    		where digit % 2 == 0
+					    		orderby digit
+					    		select digit;
+				
 			foreach (var digit in ordered_array)
 				Console.Write($"{digit} ");
 
 			indent();
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 			return;
 		}
 	}
