@@ -99,8 +99,18 @@ namespace Task12_2
 			}
 
 			Console.WriteLine("ж) Вариант через Linq: ");		
-			Console.WriteLine("В стадии разработки...\n");
+			var s2_reversed = new string((from letter in s2.Select((value, index) => new { value, index })	/* Переворачивание строки s2. */
+					  orderby letter.index descending
+					  select letter.value).ToArray());
 
+			bool zh_result = s1.Zip(s2_reversed, (i, j) => new {i, j})	/* Является ли строка s1 строкой перевернутой строке s2 (производится слияние двух строк и сравнение по по одному символу). */
+					 .All(letter => letter.i == letter.j);
+			
+			if (zh_result)
+				Console.WriteLine("Строки обратны друг другу.\n");
+			else 
+				Console.WriteLine("Строки не обратны друг другу.\n");
+			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			Console.WriteLine("з) Обычный вариант: ");
