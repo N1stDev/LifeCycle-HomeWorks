@@ -45,13 +45,13 @@ namespace Task12_2
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			Console.WriteLine("e) Обычный вариант: ");
-			string[] array_e = new string[array_quantity] {"ХвОст", "МОтор", "МоЧаЛка", "СоПЛя", "кот", "РЫБА", "ГиДРоЭлеКтРОстанЦИя", "КрУг", "ДеЛЬфин", "оТВАР"};
+			string[] array_e = new string[array_quantity] {"ХвОст", "МОтор", "МоЧаЛка", "СнОТворное", "кот", "РЫБА", "ГиДРоЭлеКтРОстанЦИя", "КрУг", "ДеЛЬфин", "оТВАР"};
 
 			var result_e = new List<string>();
 
 			foreach (string word in array_e)
 			{
-				if (word.Contains("от") || word.Contains("оТ") || word.Contains("От") || word.Contains("ОТ"))
+				if (word.ToLower().Contains("от"))
 					result_e.Add(word);
 			}
 			result_e.Sort();
@@ -79,10 +79,11 @@ namespace Task12_2
 			string s2 = "рикардо милос";
 			
 			if (s1.Length != s2.Length)
-				Console.WriteLine("Строки не обратны друг другу.");
+				Console.WriteLine("Строки не обратны друг другу.\n");
 			else
 			{
 				bool flag = true;
+
 				for (int i = 0; i < s1.Length; i++)
 				{
 					if (s1[i] != s2[s2.Length - i - 1])
@@ -93,15 +94,12 @@ namespace Task12_2
 				}
 
 				if (flag)
-					Console.WriteLine("Строки обратны друг другу.");
+					Console.WriteLine("Строки обратны друг другу.\n");
 
 			}
-			Console.WriteLine("\n");
 
-			Console.WriteLine("ж) Вариант через Linq: ");		// Здесь не сделяль
-			var zh_result = 
-			
-			Console.WriteLine("\n");
+			Console.WriteLine("ж) Вариант через Linq: ");		
+			Console.WriteLine("В стадии разработки...\n");
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
