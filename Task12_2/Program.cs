@@ -6,12 +6,6 @@ namespace Task12_2
 {
 	class Program
 	{
-		static void indent()
-		{
-			for (int i = 0; i < 2; i++)
-				Console.WriteLine("");
-		}
-
 		static void Main(string[] args)
 		{
 			const int array_quantity = 10;
@@ -34,7 +28,7 @@ namespace Task12_2
 				}
 			}
 
-			indent();
+			Console.WriteLine("\n");
 
 			Console.WriteLine("д) Вариант через Linq: "); 				// Здесь не сделяль
 			var digit_pairs = from number in array_d_1
@@ -43,7 +37,7 @@ namespace Task12_2
 			foreach (var number in digit_pairs)
 				Console.Write($"{number}");
 
-			indent();			
+			Console.WriteLine("\n");			
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -62,7 +56,7 @@ namespace Task12_2
 			foreach (string word in result_e)
 				Console.Write($"{word} ");
 
-			indent();
+			Console.WriteLine("\n");
 
 			Console.WriteLine("e) Вариант через Linq: ");
 			var ordered_words = from word in array_e
@@ -73,7 +67,7 @@ namespace Task12_2
  			foreach (var word in ordered_words)
 				Console.Write($"{word} ");
 
-			indent();
+			Console.WriteLine("\n");
 	
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -98,21 +92,21 @@ namespace Task12_2
 				if (flag)
 					Console.WriteLine("Строки обратны друг другу.");
 			}
-			Console.WriteLine("");
+			Console.WriteLine("\n");
 
 			Console.WriteLine("ж) Вариант через Linq: ");		// Здесь не сделяль
 
 			// ...
 			
-			Console.WriteLine("");
+			Console.WriteLine("\n");
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			Console.WriteLine("з) Обычный вариант: ");
 			int[] array_z = new int[array_quantity] {54, 323, 6412, 66, 2, 9889, 55, 90, 43, 0};
-
+			
 			int index = 0;
-			for (int i = 0; i < array_quantity; i++)
+			for (int i = 0; i < array_quantity; i++)	/* Группировка чётных чисел в левую часть массива, нечетных - в правую. */
 			{
 				if (array_z[i] % 2 == 0)
 				{
@@ -120,10 +114,10 @@ namespace Task12_2
 					array_z[i] = array_z[index];
 					array_z[index] = t;
 					index++;
-				}			
+				}	
 			}
 
-			for (int i = 0; i < index; i++)
+			for (int i = 0; i < index; i++)			/* Сортировка чётных чисел. */
 			{
 				for (int j = i + 1; j < index; j++)
 				{
@@ -135,11 +129,24 @@ namespace Task12_2
 					}
 				} 
 			}
-
-			for (int i = 0; i < array_quantity; i++)
+			
+			for (int i = index; i < array_quantity; i++)	/* Сортировка нечётных чисел. */
+			{
+				for (int j = i + 1; j < array_quantity; j++)
+				{
+					if (array_z[i] > array_z[j])
+					{
+						int t = array_z[i];
+						array_z[i] = array_z[j];
+						array_z[j] = t;
+					}
+				}
+			}
+			
+			for (int i = 0; i < array_quantity; i++)	/* Вывод отсортированного массива. */
 				Console.Write($"{array_z[i]} ");
 
-			indent();
+			Console.WriteLine("\n");
 
 			Console.WriteLine("з) Вариант через Linq: ");
 			
@@ -151,7 +158,7 @@ namespace Task12_2
 			foreach (var digit in ordered_array)
 				Console.Write($"{digit} ");
 
-			indent();
+			Console.WriteLine("\n");
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 			return;
 		}
