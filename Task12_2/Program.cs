@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Task12_2
 {
@@ -30,12 +31,14 @@ namespace Task12_2
 
 			Console.WriteLine("\n");
 
-			Console.WriteLine("д) Вариант через Linq: "); 				// Здесь не сделяль
-			var digit_pairs = from number in array_d_1
-					  select number;
+			Console.WriteLine("д) Вариант через Linq: "); 				
+			var digit_pairs = from number_1 in array_d_1
+					  from number_2 in array_d_2
+					  where number_1 % 5 == 0 && number_2 % 5 == 0
+					  select new { number_1, number_2 };
 			
-			foreach (var number in digit_pairs)
-				Console.Write($"{number}");
+			foreach (var pair in digit_pairs)
+				Console.Write($"[{pair.number_1} {pair.number_2}] ");
 
 			Console.WriteLine("\n");			
 			
@@ -91,12 +94,12 @@ namespace Task12_2
 
 				if (flag)
 					Console.WriteLine("Строки обратны друг другу.");
+
 			}
 			Console.WriteLine("\n");
 
 			Console.WriteLine("ж) Вариант через Linq: ");		// Здесь не сделяль
-
-			// ...
+			var zh_result = 
 			
 			Console.WriteLine("\n");
 
@@ -149,15 +152,20 @@ namespace Task12_2
 			Console.WriteLine("\n");
 
 			Console.WriteLine("з) Вариант через Linq: ");
+			int[] array_z_2 = new int[array_quantity] {54, 323, 6412, 66, 2, 9889, 55, 90, 43, 0};
 			
-			var ordered_array = from digit in array_z			// Здесь не сделаль	
-					    		where digit % 2 == 0
-					    		orderby digit
-					    		select digit;
-				
-			foreach (var digit in ordered_array)
-				Console.Write($"{digit} ");
+			IEnumerable<IGrouping<int, int>> query = from digit in array_z_2	/* Сортировка массива по возрастанию, группировка по чётности */
+								 orderby digit			
+					    			 group digit by digit % 2;
 
+			foreach (var group in query)
+			{
+				Console.Write(group.Key == 0 ? "" : "");	/* Вывод чётных чисел, затем - нечётных */
+				foreach (var digit in group)
+					Console.Write($"{digit} ");
+
+			}
+	
 			Console.WriteLine("\n");
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 			return;
