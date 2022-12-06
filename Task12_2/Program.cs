@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace Task12_2
 {
@@ -14,7 +13,7 @@ namespace Task12_2
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			Console.WriteLine("д) Обычный вариант: ");
-			int[] array_d_1 = new int[array_quantity] {1,  10, 24,    3, 17,   6, 5, 0,  9,  11};
+			int[] array_d_1 = new int[array_quantity] {1, 10, 24, 3, 17, 6, 5, 0, 9, 11};
 			int[] array_d_2 = new int[array_quantity] {25, 101, 8, 1337, 45, 36, 78, 0, 97, 100};
 			
 			for (int i = 0; i < array_quantity; i++)
@@ -103,8 +102,8 @@ namespace Task12_2
 					  orderby letter.index descending
 					  select letter.value).ToArray());
 
-			bool zh_result = s1.Zip(s2_reversed, (i, j) => new {i, j})	/* Является ли строка s1 строкой перевернутой строке s2 (производится слияние двух строк и сравнение по по одному символу). */
-					 .All(letter => letter.i == letter.j);
+			bool zh_result = s1.Zip(s2_reversed, (i, j) => new {i, j})	
+					 .All(letter => letter.i == letter.j);	
 			
 			if (zh_result)
 				Console.WriteLine("Строки обратны друг другу.\n");
@@ -140,7 +139,7 @@ namespace Task12_2
 					}
 				} 
 			}
-			
+	
 			for (int i = index; i < array_quantity; i++)	/* Сортировка нечётных чисел. */
 			{
 				for (int j = i + 1; j < array_quantity; j++)
@@ -156,12 +155,11 @@ namespace Task12_2
 			
 			for (int i = 0; i < array_quantity; i++)	/* Вывод отсортированного массива. */
 				Console.Write($"{array_z[i]} ");
-
 			Console.WriteLine("\n");
 
 			Console.WriteLine("з) Вариант через Linq: ");
 			int[] array_z_2 = new int[array_quantity] {54, 323, 6412, 66, 2, 9889, 55, 90, 43, 0};
-			
+
 			IEnumerable<IGrouping<int, int>> query = from digit in array_z_2	/* Сортировка массива по возрастанию, группировка по чётности */
 								 orderby digit			
 					    			 group digit by digit % 2;
