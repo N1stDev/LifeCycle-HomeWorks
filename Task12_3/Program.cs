@@ -1,7 +1,13 @@
-﻿
-
-static class Sorter
+﻿class Worker
 {
+    public string Name;
+    public int Salary;
+
+    public Worker(string name, int salary)
+    {
+        Name = name;
+        Salary = salary;
+    }
 }
 
 class Program
@@ -33,15 +39,39 @@ class Program
         }
         
         Console.WriteLine("Для четных сумма: " + multiplesDict["четные"][0]);
-        Console.WriteLine("Для нечетных сумма: " + multiplesDict["нечетные"][0]);
+        Console.WriteLine("Для нечетных сумма: " + multiplesDict["нечетные"][0] + "\n");
 
-        var even = ints.ToList().Where(x => x % 2 == 0);
-        var even_tuple = (even, even.Sum());
+        var even = ints.Where(x => x % 2 == 0);
+        var evenTuple = (even, even.Sum());
 
-        var odd = ints.ToList().Where(x => x % 2 != 0);
-        var odd_tuple = (odd, odd.Sum());
+        var odd = ints.Where(x => x % 2 != 0);
+        var oddTuple = (odd, odd.Sum());
 
-        Console.WriteLine("Для четных сумма: " + even_tuple.Item2);
-        Console.WriteLine("Для нечетных сумма: " + odd_tuple.Item2);
+        Console.WriteLine("Для четных сумма: " + evenTuple.Item2);
+        Console.WriteLine("Для нечетных сумма: " + oddTuple.Item2 + "\n");
+
+        Random rand = new(123);
+        string[] names = { "Петров", "Сидоров", "Иванов", "Смирнов", "Котов" };
+
+        List<Worker> workers = new();
+
+        for (int i = 0; i < 100; i++)
+        {
+            workers.Add(
+                new(
+                    names[rand.Next(0, names.Length)], 
+                    rand.Next(100, 400)
+                    )
+                );
+        }
+
+        var workersTable = workers
+            .GroupBy(x => x.Name)
+            .Select(g => new { name = g.Key, sum = workers.Where(w => w.Name == g.Key).Sum(w1 => w1.Salary) });
+
+        foreach (var w in workersTable)
+        {
+            Console.WriteLine(w);
+        }
     }
 }
