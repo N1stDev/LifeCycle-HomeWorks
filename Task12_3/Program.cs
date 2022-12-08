@@ -67,7 +67,7 @@ class Program
 
         var workersTable = workers
             .GroupBy(x => x.Name)
-            .Select(g => new { name = g.Key, sum = workers.Where(w => w.Name == g.Key).Sum(w1 => w1.Salary) });
+            .Select(x => new { name = x.Key, sum = workers.Where(w => w.Name == x.Key).Sum(w => w.Salary) });
 
         foreach (var w in workersTable)
         {
@@ -96,6 +96,30 @@ class Program
         foreach (var f in fruitsTable)
         {
             Console.WriteLine(f);
+        }
+
+        var firstWorkerTable = workers
+            .Select(g => new { name = g.Name, salary = g.Salary })
+            .Where(g => g.name == workers[0].Name)
+            .OrderBy(g => g.salary);
+
+        Console.WriteLine();
+
+        foreach (var w in firstWorkerTable)
+        {
+            Console.WriteLine(w);
+        }
+
+        var secondWorkerTable = workers
+            .Select(g => new { name = g.Name, salary = g.Salary })
+            .Where(g => g.name == workers[1].Name)
+            .OrderByDescending(g => g.salary);
+
+        Console.WriteLine();
+
+        foreach (var w in secondWorkerTable)
+        {
+            Console.WriteLine(w);
         }
     }
 }
