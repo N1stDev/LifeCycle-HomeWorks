@@ -73,5 +73,29 @@ class Program
         {
             Console.WriteLine(w);
         }
+
+        List<string> fruits = new()
+        {
+            "grapes",
+            "apple",
+            "apple",
+            "pear",
+            "apple",
+            "pear",
+            "grapes",
+            "grapes"
+        };
+
+        var fruitsTable = fruits
+            .GroupBy(g => g)
+            .Select(g => new {name = g.Key, count = fruits.Count(x => x == g.Key)})
+            .Where(g => g.count == 3);
+
+        Console.WriteLine();
+
+        foreach (var f in fruitsTable)
+        {
+            Console.WriteLine(f);
+        }
     }
 }
