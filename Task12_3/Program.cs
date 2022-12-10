@@ -1,4 +1,7 @@
-﻿class Worker
+﻿using System;
+using System.Security.Cryptography;
+
+class Worker
 {
     public string Name;
     public int Salary;
@@ -121,5 +124,29 @@ class Program
         {
             Console.WriteLine(w);
         }
+
+        var ints1 = new int[] { 1, 2, 3, 4, 5 };
+
+        var combinations =
+            from x in ints1
+            from y in ints1
+            from z in ints1
+            where x != y && x != z && y != z
+            select new { x, y, z };
+
+        foreach (var c in combinations)
+        {
+            Console.WriteLine(c);
+        }
+
+        string combinationsString = 
+            string.Join
+            (", ",
+            combinations.
+            Select(s => $"({s.x}, {s.y}, {s.z})").
+            ToArray()
+            );
+
+        Console.WriteLine(combinationsString);
     }
 }
