@@ -160,7 +160,7 @@ namespace Task12_2
 			Console.WriteLine("з) Вариант через Linq: ");
 			int[] array_z_2 = new int[array_quantity] {54, 323, 6412, 66, 2, 9889, 55, 90, 43, 0};
 
-			IEnumerable<IGrouping<int, int>> query = from digit in array_z_2	/* Сортировка массива по возрастанию, группировка по чётности */
+			var query = from digit in array_z_2	/* Сортировка массива по возрастанию, группировка по чётности */
 								 orderby digit			
 					    			 group digit by digit % 2;
 
