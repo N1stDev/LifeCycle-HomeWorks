@@ -166,7 +166,7 @@ namespace Task12_2
 
 			foreach (var group in query)
 			{
-				Console.Write(group.Key == 0 ? "" : "");	/* Вывод чётных чисел, затем - нечётных */
+				
 				foreach (var digit in group)
 					Console.Write($"{digit} ");
 
